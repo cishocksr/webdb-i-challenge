@@ -55,4 +55,19 @@ server.put('/:id', async (req, res) => {
   }
 });
 
+server.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const acctDeleted = await db('accounts')
+      .where('id', id)
+      .del();
+    res.status(200).json({
+      deletedAccount: acctDeleted
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: 'Failed to update post'
+    });
+  }
+});
 module.exports = server;
